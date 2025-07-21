@@ -21,13 +21,14 @@
             font-family: 'Poppins', sans-serif;
             line-height: 1.7;
             color: #f670a2;
-            background: linear-gradient(135deg, #fef5f0 0%, #F6F8F9 100%);
+            background: #fef5f0;
+            position: relative;
+            min-height: 100vh;
             background-size: 300% 300%;
             animation: gradientBG 15s ease infinite;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
         }
         
         @keyframes gradientBG {
@@ -118,12 +119,29 @@
         .nav-links a {
             color: #f670a2;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s, transform 0.2s;
             font-weight: 500;
         }
 
         .nav-links a:hover {
-            color: #f670a2;
+            color: #fff;
+            background: #f670a2;
+            border-radius: 8px;
+            padding: 0.2em 0.8em;
+            transform: scale(1.08);
+        }
+        .nav-links a[aria-label="Instagram"]:hover {
+            color: #f670a2 !important;
+            background: none !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+        }
+        .nav-links a[aria-label="Instagram"]:hover svg {
+            transform: scale(1.18);
+            transition: transform 0.2s;
+        }
+        .nav-links a[aria-label="Instagram"] svg {
+            transition: transform 0.2s;
         }
 
         /* Hero Section */
@@ -188,15 +206,17 @@
             font-size: 1.1rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(58, 99, 81, 0.15);
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 8px 25px #f670a222;
             animation: slideInLeft 1s ease-out 0.4s both;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(58, 99, 81, 0.25);
-            background: #295943;
+            background: #fff;
+            color: #f670a2;
+            transform: scale(1.06);
+            box-shadow: 0 12px 35px #f670a244;
+            border: 2px solid #f670a2;
         }
 
         .hero-visual {
@@ -398,15 +418,15 @@
             padding: 2rem;
             border-radius: 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
             border: 1px solid #f670a222;
             backdrop-filter: blur(10px);
         }
 
         .benefit-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px #f670a222;
-            background: #F6F8F9;
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 24px 48px #f670a244;
+            background: #fef5f0;
         }
 
         .benefit-icon {
@@ -508,9 +528,6 @@
         }
 
         .whatsapp-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
             background: #f670a2;
             color: #FFFFFF;
             padding: 1rem 2rem;
@@ -519,13 +536,19 @@
             font-size: 1.1rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
             margin-top: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .whatsapp-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px #f670a222;
+            background: #fff;
+            color: #f670a2;
+            transform: scale(1.06);
+            box-shadow: 0 12px 35px #f670a244;
+            border: 2px solid #f670a2;
         }
 
         /* Footer */
@@ -579,6 +602,35 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .blobs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .blobs-bg svg {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            min-width: 400px;
+            min-height: 400px;
+            opacity: 0.25;
+        }
+        .blobs-bg .blob1 { left: -10vw; top: -10vw; }
+        .blobs-bg .blob2 { right: -15vw; top: 20vh; }
+        .blobs-bg .blob3 { left: 10vw; bottom: -15vw; }
+        /* Footer Instagram icon hover */
+        .footer-landing a[aria-label="Instagram"]:hover svg {
+            transform: scale(1.18);
+            transition: transform 0.2s;
+        }
+        .footer-landing a[aria-label="Instagram"] svg {
+            transition: transform 0.2s;
+        }
     </style>
 </head>
 <body>
@@ -590,16 +642,26 @@
                     Espaço Ferraz
                 </div>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" style="align-items: center;">
                 <li><a href="#home">Início</a></li>
                 <li><a href="#beneficios">Benefícios</a></li>
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#contato">Contato</a></li>
+                <li style="margin-left: 1.5rem;">
+                  <a href="https://instagram.com/espacoferraz" target="_blank" aria-label="Instagram" style="display: flex; align-items: center; padding: 0; background: none; border: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+                  </a>
+                </li>
             </ul>
         </nav>
     </header>
 
     <section id="home" class="hero">
+        <div class="blobs-bg hero-blobs" style="z-index:1;">
+            <svg class="blob1" viewBox="0 0 600 600"><g transform="translate(300,300)"><path d="M120,-170C160,-140,200,-120,210,-90C220,-60,200,-20,180,20C160,60,140,100,110,130C80,160,40,180,0,180C-40,180,-80,160,-120,140C-160,120,-200,100,-210,70C-220,40,-200,0,-180,-40C-160,-80,-140,-120,-110,-150C-80,-180,-40,-200,0,-200C40,-200,80,-180,120,-170Z" fill="#f670a2"/></g></svg>
+            <svg class="blob2" viewBox="0 0 600 600"><g transform="translate(300,300)"><path d="M140,-180C180,-140,220,-120,230,-80C240,-40,220,0,200,40C180,80,160,120,120,150C80,180,40,200,0,200C-40,200,-80,180,-120,160C-160,140,-200,120,-210,80C-220,40,-200,0,-180,-40C-160,-80,-140,-120,-120,-160C-100,-200,-60,-220,-20,-230C20,-240,60,-220,100,-200C140,-180,180,-160,140,-180Z" fill="#ffb86b"/></g></svg>
+            <svg class="blob3" viewBox="0 0 600 600"><g transform="translate(300,300)"><path d="M100,-140C140,-100,180,-80,190,-50C200,-20,180,20,160,60C140,100,120,140,90,170C60,200,20,220,-20,220C-60,220,-100,200,-140,180C-180,160,-220,140,-230,110C-240,80,-220,40,-200,0C-180,-40,-160,-80,-130,-110C-100,-140,-60,-160,-20,-170C20,-180,60,-160,100,-140Z" fill="#f670a2"/></g></svg>
+        </div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -695,7 +757,10 @@
             </div>
 
             <a href="https://wa.me/5587988612871?text=Olá!%20Gostaria%20de%20agendar%20uma%20sessão%20de%20ventosa%20terapia." target="_blank" class="whatsapp-button fade-in">
-                📱 Conversar no WhatsApp
+                <span style="display: flex; align-items: center;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16" style="margin-right: 8px;"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>
+                  Conversar no WhatsApp
+                </span>
             </a>
         </div>
     </section>
@@ -703,14 +768,16 @@
     <footer>
         <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 1.2rem;">
             <nav style="margin-bottom: 0.5rem;">
-                <ul style="display: flex; gap: 2rem; list-style: none; padding: 0; margin: 0;">
+                <ul style="display: flex; gap: 2rem; list-style: none; padding: 0; margin: 0; align-items: center;">
                     <li><a href="#home" style="color: #f670a2; text-decoration: none; font-weight: 500;">Início</a></li>
                     <li><a href="#beneficios" style="color: #f670a2; text-decoration: none; font-weight: 500;">Benefícios</a></li>
                     <li><a href="#sobre" style="color: #f670a2; text-decoration: none; font-weight: 500;">Sobre</a></li>
                     <li><a href="#contato" style="color: #f670a2; text-decoration: none; font-weight: 500;">Contato</a></li>
                 </ul>
             </nav>
-            <p style="margin: 0; font-size: 1.05rem; color: #f670a2; opacity: 0.85;">&copy; 2025 Espaço Ferraz. Todos os direitos reservados. Desenvolvido com <span style="color:#e25555;">❤️</span> para seu bem-estar</p>            <div class="footer-landing" style="width:100%;text-align:center;font-size:1.05rem;color:#f670a2;opacity:0.85;letter-spacing:0.02em;">
+            <p style="margin: 0; font-size: 1.05rem; color: #f670a2; opacity: 0.85; display: flex; align-items: center; justify-content: center; gap: 0.7em; flex-wrap: wrap;">&copy; 2025 Espaço Ferraz. Todos os direitos reservados. Desenvolvido com <span style="color:#e25555;">❤️</span> para seu bem-estar
+            </p>
+            <div class="footer-landing" style="width:100%;text-align:center;font-size:1.05rem;color:#f670a2;opacity:0.85;letter-spacing:0.02em;">
                 
             </div>
         </div>
