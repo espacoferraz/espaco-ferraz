@@ -783,6 +783,248 @@
         </div>
     </footer>
 
+    <!-- Chatbot Pop-up -->
+    <style>
+      .chatbot-btn {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        z-index: 9999;
+        background: #f670a2;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        box-shadow: 0 4px 24px #f670a244;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .chatbot-btn:hover {
+        background: #fff;
+        color: #f670a2;
+        transform: scale(1.08);
+        border: 2px solid #f670a2;
+      }
+      .chatbot-popup {
+        position: fixed;
+        bottom: 110px;
+        right: 32px;
+        width: 340px;
+        max-width: 95vw;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px #f670a244;
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1.5px solid #f670a2;
+      }
+      .chatbot-popup.open {
+        display: flex;
+      }
+      .chatbot-header {
+        background: #f670a2;
+        color: #fff;
+        padding: 1rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .chatbot-close {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.3rem;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+      .chatbot-body {
+        padding: 1rem;
+        background: #fef5f0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        font-size: 1rem;
+        max-height: 260px;
+        overflow-y: auto;
+      }
+      .chatbot-msg {
+        background: #fff;
+        border-radius: 12px;
+        padding: 0.7em 1em;
+        box-shadow: 0 2px 8px #f670a211;
+        align-self: flex-start;
+        margin-bottom: 0.2em;
+        color: #f670a2;
+      }
+      .chatbot-msg.user {
+        background: #f670a2;
+        color: #fff;
+        align-self: flex-end;
+      }
+      .chatbot-suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        margin-top: 0.5em;
+      }
+      .chatbot-suggestion {
+        background: #f670a2;
+        color: #fff;
+        border: none;
+        border-radius: 16px;
+        padding: 0.4em 1em;
+        cursor: pointer;
+        font-size: 0.95em;
+        transition: background 0.2s, color 0.2s;
+      }
+      .chatbot-suggestion:hover {
+        background: #fff;
+        color: #f670a2;
+        border: 1px solid #f670a2;
+      }
+      .chatbot-input-area {
+        display: flex;
+        border-top: 1px solid #f670a222;
+        background: #fff;
+      }
+      .chatbot-input {
+        flex: 1;
+        border: none;
+        padding: 0.7em 1em;
+        font-size: 1em;
+        border-radius: 0;
+        outline: none;
+        background: #fff;
+        color: #f670a2;
+      }
+      .chatbot-send {
+        background: #f670a2;
+        color: #fff;
+        border: none;
+        font-size: 1.2em;
+        padding: 0 1em;
+        cursor: pointer;
+        border-radius: 0 0 18px 0;
+        transition: background 0.2s;
+      }
+      .chatbot-send:hover {
+        background: #fff;
+        color: #f670a2;
+        border: 1px solid #f670a2;
+      }
+    </style>
+    <button class="chatbot-btn" id="chatbotBtn" aria-label="Abrir chat">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+        <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+      </svg>
+    </button>
+    <div class="chatbot-popup" id="chatbotPopup">
+      <div class="chatbot-header">
+        Chat Espaço Ferraz
+        <button class="chatbot-close" id="chatbotClose" aria-label="Fechar chat">&times;</button>
+      </div>
+      <div class="chatbot-body" id="chatbotBody">
+        <div class="chatbot-msg">Olá! 👋<br>Como posso ajudar? Veja algumas perguntas frequentes:</div>
+        <div class="chatbot-suggestions" id="chatbotSuggestions"></div>
+      </div>
+      <form class="chatbot-input-area" id="chatbotForm" autocomplete="off">
+        <input class="chatbot-input" id="chatbotInput" type="text" placeholder="Digite sua pergunta..." />
+        <button class="chatbot-send" type="submit" aria-label="Enviar">➤</button>
+      </form>
+    </div>
+    <script>
+      const faq = [
+        {
+          q: 'O que é ventosaterapia?',
+          a: 'A ventosaterapia é uma técnica terapêutica que utiliza copos para criar sucção na pele, promovendo relaxamento, alívio de dores e melhora da circulação.'
+        },
+        {
+          q: 'Quais os benefícios?',
+          a: 'Os principais benefícios são: alívio de dores musculares, relaxamento, melhora da circulação, redução de tensões e auxílio na recuperação muscular.'
+        },
+        {
+          q: 'Dói fazer ventosaterapia?',
+          a: 'A maioria das pessoas sente apenas uma pressão ou leve desconforto. Pode deixar marcas temporárias, mas geralmente não dói.'
+        },
+        {
+          q: 'Quanto tempo dura a sessão?',
+          a: 'Uma sessão de ventosaterapia dura em média de 20 a 40 minutos, dependendo da necessidade de cada pessoa.'
+        },
+        {
+          q: 'Quem não pode fazer ventosaterapia?',
+          a: 'Gestantes, pessoas com trombose, feridas abertas ou problemas graves de pele devem evitar a ventosaterapia. Consulte sempre um profissional.'
+        },
+        {
+          q: 'Como agendar uma sessão?',
+          a: 'Você pode agendar pelo WhatsApp ou pelo formulário de contato na página.'
+        }
+      ];
+      const chatbotBtn = document.getElementById('chatbotBtn');
+      const chatbotPopup = document.getElementById('chatbotPopup');
+      const chatbotClose = document.getElementById('chatbotClose');
+      const chatbotBody = document.getElementById('chatbotBody');
+      const chatbotForm = document.getElementById('chatbotForm');
+      const chatbotInput = document.getElementById('chatbotInput');
+      const chatbotSuggestions = document.getElementById('chatbotSuggestions');
+
+      function addMsg(msg, user=false) {
+        const div = document.createElement('div');
+        div.className = 'chatbot-msg' + (user ? ' user' : '');
+        div.innerHTML = msg;
+        chatbotBody.appendChild(div);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }
+
+      function showSuggestions() {
+        chatbotSuggestions.innerHTML = '';
+        faq.forEach(f => {
+          const btn = document.createElement('button');
+          btn.className = 'chatbot-suggestion';
+          btn.textContent = f.q;
+          btn.onclick = () => handleQuestion(f.q);
+          chatbotSuggestions.appendChild(btn);
+        });
+      }
+
+      function handleQuestion(q) {
+        addMsg(q, true);
+        chatbotInput.value = '';
+        const found = faq.find(f => f.q.toLowerCase() === q.toLowerCase());
+        setTimeout(() => {
+          if (found) {
+            addMsg(found.a);
+          } else {
+            addMsg('Desculpe, não sei responder essa pergunta ainda. Tente outra ou fale conosco pelo WhatsApp!');
+          }
+        }, 600);
+      }
+
+      chatbotBtn.onclick = () => {
+        chatbotPopup.classList.toggle('open');
+        if (chatbotPopup.classList.contains('open')) {
+          setTimeout(() => chatbotInput.focus(), 300);
+        }
+      };
+      chatbotClose.onclick = () => chatbotPopup.classList.remove('open');
+
+      chatbotForm.onsubmit = e => {
+        e.preventDefault();
+        const q = chatbotInput.value.trim();
+        if (q) handleQuestion(q);
+      };
+
+      showSuggestions();
+    </script>
     <script>
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
