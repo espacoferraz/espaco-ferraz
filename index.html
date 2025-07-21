@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventosaterapia - Espaço Ferraz</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo-img.png">
+    <link rel="apple-touch-icon" href="logo-img.png">
     <meta name="theme-color" content="#e8c4b0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,15 +20,8 @@
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.7;
-            color: #4a2b2b;
-            background: linear-gradient(
-                135deg, 
-                #f9f1ec 0%, 
-                #f4e4d9 25%, 
-                #f0d8cb 50%, 
-                #e8c4b0 75%, 
-                #e0b197 100%
-            );
+            color: #f670a2;
+            background: linear-gradient(135deg, #fef5f0 0%, #F6F8F9 100%);
             background-size: 300% 300%;
             animation: gradientBG 15s ease infinite;
             overflow-x: hidden;
@@ -79,7 +72,7 @@
 
         /* Header */
         header {
-            background: rgba(74, 43, 43, 0.95);
+            background: #fef5f0;
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
@@ -87,6 +80,7 @@
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         nav {
@@ -110,7 +104,7 @@
         }
 
         .logo-text {
-            color: #f4d7c7;
+            color: #f670a2;
             font-size: 1.2rem;
             font-weight: bold;
         }
@@ -122,14 +116,14 @@
         }
 
         .nav-links a {
-            color: #f4d7c7;
+            color: #f670a2;
             text-decoration: none;
             transition: color 0.3s ease;
             font-weight: 500;
         }
 
         .nav-links a:hover {
-            color: #e8c4b0;
+            color: #f670a2;
         }
 
         /* Hero Section */
@@ -137,7 +131,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, #f4d7c7 0%, #e8c4b0 50%, #deb59a 100%);
+            background: linear-gradient(135deg, #fef5f0 0%, #F6F8F9 100%);
             position: relative;
             overflow: hidden;
         }
@@ -169,7 +163,7 @@
 
         .hero-text h1 {
             font-size: 3.5rem;
-            color: #4a2b2b;
+            color: #f670a2;
             margin-bottom: 1rem;
             line-height: 1.2;
             animation: slideInLeft 1s ease-out;
@@ -178,7 +172,7 @@
         .hero-text p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
-            color: #6b4545;
+            color: #f670a2;
             animation: slideInLeft 1s ease-out 0.2s both;
         }
 
@@ -186,8 +180,8 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: #4a2b2b;
-            color: #f4d7c7;
+            background: #f670a2;
+            color: #FFFFFF;
             padding: 1rem 2rem;
             border: none;
             border-radius: 50px;
@@ -195,14 +189,14 @@
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(74, 43, 43, 0.3);
+            box-shadow: 0 8px 25px rgba(58, 99, 81, 0.15);
             animation: slideInLeft 1s ease-out 0.4s both;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(74, 43, 43, 0.4);
-            background: #5d3636;
+            box-shadow: 0 12px 35px rgba(58, 99, 81, 0.25);
+            background: #295943;
         }
 
         .hero-visual {
@@ -382,14 +376,14 @@
         /* Benefits Section */
         .benefits {
             padding: 6rem 0;
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #fef5f0 0%, #F6F8F9 100%);
             backdrop-filter: blur(10px);
         }
 
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            color: #4a2b2b;
+            color: #f670a2;
             margin-bottom: 3rem;
         }
 
@@ -400,32 +394,32 @@
         }
 
         .benefit-card {
-            background: rgba(255, 255, 255, 0.8);
+            background: #FFFFFF;
             padding: 2rem;
             border-radius: 20px;
             text-align: center;
             transition: all 0.3s ease;
-            border: 1px solid rgba(74, 43, 43, 0.1);
+            border: 1px solid #f670a222;
             backdrop-filter: blur(10px);
         }
 
         .benefit-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(74, 43, 43, 0.2);
-            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px #f670a222;
+            background: #F6F8F9;
         }
 
         .benefit-icon {
             width: 80px;
             height: 80px;
-            background: #4a2b2b;
+            background: #f670a222;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
             font-size: 2rem;
-            color: #f4d7c7;
+            color: #f670a2;
         }
 
         .benefit-card h3 {
@@ -442,7 +436,7 @@
         /* About Section */
         .about {
             padding: 6rem 0;
-            background: linear-gradient(135deg, #e8c4b0 0%, #deb59a 100%);
+            background: linear-gradient(135deg, #fef5f0 0%, #F6F8F9 100%);
         }
 
         .about-content {
@@ -454,19 +448,19 @@
 
         .about-text h2 {
             font-size: 2.5rem;
-            color: #4a2b2b;
+            color: #f670a2;
             margin-bottom: 2rem;
         }
 
         .about-text p {
             font-size: 1.1rem;
-            color: #6b4545;
+            color: #f670a2;
             margin-bottom: 1.5rem;
             text-align: justify;
         }
 
         .about-visual {
-            background: rgba(255, 255, 255, 0.2);
+            background: #FFFFFF;
             border-radius: 20px;
             padding: 3rem;
             text-align: center;
@@ -476,15 +470,15 @@
         /* Contact Section */
         .contact {
             padding: 6rem 0;
-            background: #4a2b2b;
-            color: #f4d7c7;
+            background: linear-gradient(135deg, #fef5f0 0%, #F6F8F9 100%);
+            color: #f670a2;
             text-align: center;
         }
 
         .contact h2 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: #f4d7c7;
+            color: #f670a2;
         }
 
         .contact-info {
@@ -504,21 +498,21 @@
         .contact-icon {
             width: 60px;
             height: 60px;
-            background: #f4d7c7;
+            background: #f670a2;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: #4a2b2b;
+            color: #FFFFFF;
         }
 
         .whatsapp-button {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: #25d366;
-            color: white;
+            background: #f670a2;
+            color: #FFFFFF;
             padding: 1rem 2rem;
             border: none;
             border-radius: 50px;
@@ -531,13 +525,13 @@
 
         .whatsapp-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 8px 25px #f670a222;
         }
 
         /* Footer */
         footer {
-            background: #3d2424;
-            color: #f4d7c7;
+            background: #fef5f0;
+            color: #f670a2;
             text-align: center;
             padding: 2rem 0;
         }
@@ -591,9 +585,9 @@
     <header>
         <nav class="container">
             <div class="logo">
-                <img src="logo.png" alt="Logo Espaço Ferraz" class="logo-img" style="width:50px; height:50px; border-radius:8px;">
-                <div class="logo-text" style="display: flex; align-items: center; justify-content: center; height: 50px; font-size: 1.3rem; font-weight: bold; color: #f4d7c7;">
-                    ESPAÇO FERRAZ
+                <img src="logo-img.png" alt="Logo Espaço Ferraz" class="logo-img" style="width:50px; height:50px; border-radius:8px;">
+                <div class="logo-text" style="display: flex; align-items: center; justify-content: center; height: 50px; font-size: 1.8rem; font-weight: bold; color: #f670a2; font-family: 'Pacifico', cursive;">
+                    Espaço Ferraz
                 </div>
             </div>
             <ul class="nav-links">
@@ -616,20 +610,7 @@
                     </a>
                 </div>
                 <div class="hero-visual">
-                    <div class="cupping-visual">
-                        <div class="circle circle-main">
-                            <div class="inner-glow"></div>
-                            <div class="particles"></div>
-                        </div>
-                        <div class="circle circle-1"></div>
-                        <div class="circle circle-2"></div>
-                        <div class="circle circle-3"></div>
-                        <div class="floating-elements">
-                            <div class="element"></div>
-                            <div class="element"></div>
-                            <div class="element"></div>
-                        </div>
-                    </div>
+                    <img src="hero.png" alt="Ventosaterapia - Espaço Ferraz" style="max-width: 340px; width: 100%; display: block; margin: 0 auto; border-radius: 24px;">
                 </div>
             </div>
         </div>
@@ -720,8 +701,18 @@
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Ventosaterapia - Espaço Ferraz. Todos os direitos reservados.</p>
+        <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 1.2rem;">
+            <nav style="margin-bottom: 0.5rem;">
+                <ul style="display: flex; gap: 2rem; list-style: none; padding: 0; margin: 0;">
+                    <li><a href="#home" style="color: #f670a2; text-decoration: none; font-weight: 500;">Início</a></li>
+                    <li><a href="#beneficios" style="color: #f670a2; text-decoration: none; font-weight: 500;">Benefícios</a></li>
+                    <li><a href="#sobre" style="color: #f670a2; text-decoration: none; font-weight: 500;">Sobre</a></li>
+                    <li><a href="#contato" style="color: #f670a2; text-decoration: none; font-weight: 500;">Contato</a></li>
+                </ul>
+            </nav>
+            <p style="margin: 0; font-size: 1.05rem; color: #f670a2; opacity: 0.85;">&copy; 2025 Espaço Ferraz. Todos os direitos reservados. Desenvolvido com <span style="color:#e25555;">❤️</span> para seu bem-estar</p>            <div class="footer-landing" style="width:100%;text-align:center;font-size:1.05rem;color:#f670a2;opacity:0.85;letter-spacing:0.02em;">
+                
+            </div>
         </div>
     </footer>
 
@@ -741,17 +732,7 @@
             });
         });
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(74, 43, 43, 0.98)';
-                header.style.boxShadow = '0 4px 20px rgba(74, 43, 43, 0.3)';
-            } else {
-                header.style.background = 'rgba(74, 43, 43, 0.95)';
-                header.style.boxShadow = 'none';
-            }
-        });
+        // Removido o efeito de mudança de cor do header ao rolar a página. O header permanece sempre verde (#A7D7C5).
 
         // Fade in animation on scroll
         const observerOptions = {
