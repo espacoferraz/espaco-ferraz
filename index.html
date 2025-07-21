@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventosa Terapia - Espaço Ferraz</title>
+    <title>Ventosaterapia - Espaço Ferraz</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="theme-color" content="#e8c4b0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,11 +18,41 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
             color: #4a2b2b;
             background: linear-gradient(135deg, #f4d7c7 0%, #e8c4b0 100%);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 0.8em;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        
+        p {
+            font-weight: 400;
+            margin-bottom: 1.2em;
+        }
+        
+        .logo-text {
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .container {
@@ -163,14 +199,47 @@
         .cupping-visual {
             width: 300px;
             height: 300px;
-            background: rgba(74, 43, 43, 0.1);
-            border-radius: 50%;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
+            perspective: 1000px;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        .circle-main {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #e8c4b0, #deb59a);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        .circle-1 {
+            width: 250px;
+            height: 250px;
             border: 2px solid rgba(74, 43, 43, 0.2);
+            z-index: 1;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+            border: 2px dashed rgba(74, 43, 43, 0.15);
+            z-index: 0;
+        }
+
+        .circle-3 {
+            width: 350px;
+            height: 350px;
+            border: 1px solid rgba(74, 43, 43, 0.1);
+            z-index: -1;
         }
 
         .cupping-visual::before {
@@ -453,7 +522,12 @@
                     </a>
                 </div>
                 <div class="hero-visual">
-                    <div class="cupping-visual"></div>
+                    <div class="cupping-visual">
+                        <div class="circle circle-main"></div>
+                        <div class="circle circle-1"></div>
+                        <div class="circle circle-2"></div>
+                        <div class="circle circle-3"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -602,6 +676,34 @@
             if (hero) {
                 hero.style.transform = `translateY(${scrolled * 0.3}px)`;
             }
+        });
+        // Interação com o mouse nos círculos
+        document.addEventListener('DOMContentLoaded', function() {
+            const visual = document.querySelector('.cupping-visual');
+            const circles = document.querySelectorAll('.circle');
+            
+            visual.addEventListener('mousemove', (e) => {
+                const { left, top, width, height } = visual.getBoundingClientRect();
+                const x = (e.clientX - left) / width - 0.5;
+                const y = (e.clientY - top) / height - 0.5;
+                
+                circles.forEach((circle, index) => {
+                    const factor = (index + 1) * 0.1;
+                    const moveX = x * 30 * factor;
+                    const moveY = y * 30 * factor;
+                    const rotateY = x * 15 * factor;
+                    const rotateX = y * -15 * factor;
+                    
+                    circle.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+            });
+            
+            // Resetar posição quando o mouse sair
+            visual.addEventListener('mouseleave', () => {
+                circles.forEach(circle => {
+                    circle.style.transform = 'translate3d(0, 0, 0) rotateX(0) rotateY(0)';
+                });
+            });
         });
     </script>
 </body>
