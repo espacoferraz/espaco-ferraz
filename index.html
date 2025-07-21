@@ -21,10 +21,26 @@
             font-family: 'Poppins', sans-serif;
             line-height: 1.7;
             color: #4a2b2b;
-            background: linear-gradient(135deg, #f4d7c7 0%, #e8c4b0 100%);
+            background: linear-gradient(
+                135deg, 
+                #f9f1ec 0%, 
+                #f4e4d9 25%, 
+                #f0d8cb 50%, 
+                #e8c4b0 75%, 
+                #e0b197 100%
+            );
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -204,6 +220,52 @@
             align-items: center;
             justify-content: center;
             perspective: 1000px;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .floating-elements .element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        .floating-elements .element:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            top: 20%;
+            left: 30%;
+            animation-delay: 0s;
+        }
+        
+        .floating-elements .element:nth-child(2) {
+            width: 12px;
+            height: 12px;
+            top: 60%;
+            left: 70%;
+            animation-delay: -2s;
+        }
+        
+        .floating-elements .element:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            top: 80%;
+            left: 20%;
+            animation-delay: -4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
         }
 
         .circle {
@@ -217,8 +279,40 @@
             width: 200px;
             height: 200px;
             background: linear-gradient(135deg, #e8c4b0, #deb59a);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 0 60px rgba(255, 220, 200, 0.6),
+                0 0 100px rgba(255, 220, 200, 0.3);
             z-index: 2;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .circle-main .inner-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 50%);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .circle-main .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.6) 0%, transparent 50%);
+            opacity: 0.3;
+            animation: pulse 4s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.2; }
+            100% { transform: scale(1.1); opacity: 0.4; }
         }
 
         .circle-1 {
@@ -523,10 +617,18 @@
                 </div>
                 <div class="hero-visual">
                     <div class="cupping-visual">
-                        <div class="circle circle-main"></div>
+                        <div class="circle circle-main">
+                            <div class="inner-glow"></div>
+                            <div class="particles"></div>
+                        </div>
                         <div class="circle circle-1"></div>
                         <div class="circle circle-2"></div>
                         <div class="circle circle-3"></div>
+                        <div class="floating-elements">
+                            <div class="element"></div>
+                            <div class="element"></div>
+                            <div class="element"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -606,7 +708,7 @@
                     <div class="contact-icon">📱</div>
                     <div>
                         <h3>WhatsApp</h3>
-                        <p>(87) 9 88612871</p>
+                        <p>(87) 9 8861-2871</p>
                     </div>
                 </div>
             </div>
@@ -677,32 +779,91 @@
                 hero.style.transform = `translateY(${scrolled * 0.3}px)`;
             }
         });
-        // Interação com o mouse nos círculos
+        // Configuração da animação
         document.addEventListener('DOMContentLoaded', function() {
             const visual = document.querySelector('.cupping-visual');
             const circles = document.querySelectorAll('.circle');
+            const mainCircle = document.querySelector('.circle-main');
+            const floatingElements = document.querySelectorAll('.floating-elements .element');
             
+            // Configurações de performance
+            let isMoving = false;
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            let animationId;
+            
+            // Suavizar o movimento
+            function lerp(start, end, t) {
+                return start * (1 - t) + end * t;
+            }
+            
+            // Atualizar animação
+            function update() {
+                // Suavizar o movimento do mouse
+                mouseX = lerp(mouseX, targetX, 0.1);
+                mouseY = lerp(mouseY, targetY, 0.1);
+                
+                // Aplicar movimento aos círculos
+                circles.forEach((circle, index) => {
+                    const factor = (index + 1) * 0.08;
+                    const moveX = mouseX * 40 * factor;
+                    const moveY = mouseY * 40 * factor;
+                    const rotateY = mouseX * 20 * factor;
+                    const rotateX = mouseY * -20 * factor;
+                    const scale = isMoving ? 1 + (0.05 * (circles.length - index) * 0.3) : 1;
+                    
+                    circle.style.transform = `
+                        translate3d(${moveX}px, ${moveY}px, 0) 
+                        rotateX(${rotateX}deg) 
+                        rotateY(${rotateY}deg)
+                        scale(${scale})
+                    `;
+                });
+                
+                // Aplicar efeito de brilho no círculo principal
+                if (mainCircle && mainCircle.querySelector('.inner-glow')) {
+                    const glow = mainCircle.querySelector('.inner-glow');
+                    glow.style.opacity = isMoving ? '0.8' : '0.4';
+                    glow.style.transform = `translate(${mouseX * 10}px, ${mouseY * 10}px)`;
+                }
+                
+                // Animar elementos flutuantes
+                floatingElements.forEach((el, i) => {
+                    const speed = 0.5 + (i * 0.2);
+                    const offsetX = Math.sin(Date.now() * 0.001 * speed) * 10 * (i + 1);
+                    const offsetY = Math.cos(Date.now() * 0.001 * speed) * 5 * (i + 1);
+                    el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                });
+                
+                animationId = requestAnimationFrame(update);
+            }
+            
+            // Iniciar animação
+            update();
+            
+            // Event listeners
             visual.addEventListener('mousemove', (e) => {
                 const { left, top, width, height } = visual.getBoundingClientRect();
-                const x = (e.clientX - left) / width - 0.5;
-                const y = (e.clientY - top) / height - 0.5;
-                
-                circles.forEach((circle, index) => {
-                    const factor = (index + 1) * 0.1;
-                    const moveX = x * 30 * factor;
-                    const moveY = y * 30 * factor;
-                    const rotateY = x * 15 * factor;
-                    const rotateX = y * -15 * factor;
-                    
-                    circle.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                });
+                targetX = (e.clientX - left) / width - 0.5;
+                targetY = (e.clientY - top) / height - 0.5;
+                isMoving = true;
             });
             
-            // Resetar posição quando o mouse sair
             visual.addEventListener('mouseleave', () => {
-                circles.forEach(circle => {
-                    circle.style.transform = 'translate3d(0, 0, 0) rotateX(0) rotateY(0)';
-                });
+                targetX = 0;
+                targetY = 0;
+                isMoving = false;
+            });
+            
+            // Otimização de performance
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    cancelAnimationFrame(animationId);
+                } else {
+                    update();
+                }
             });
         });
     </script>
